@@ -22,5 +22,34 @@ class ProductController extends Controller
     }
 
 
-    
+    public function addProductPage($message = null){
+        $categories = Category::distinct()->where('active', '=', 1)->orderBy('name', 'asc')->get();
+        return view('add_product',compact('categories', 'message'));
+    }
+
+
+    public function addProduct(Request $request){
+        $message = "Product not added";
+        if(empty($request->name) || empty($request->category) || empty($request->price)){
+            $message =  "Please provide all the details.";
+            return $this->addProductPage($message );
+        }
+        $product = Product::where('name', '=', $request->name)->first();
+        if(empty($product)){
+            $product = Product::create(['name' => $request->name, 'price' => $request->price, 'active' => 1]);
+        }
+   
+        $productCategory = Category::where('id', '=', $request->category)->first();
+        if(!empty($productCategory)){
+            $assignCategory = CategoryProduct::firstOrCreate(['category_id'=> $productCategory->id, 'product_id'=> $product->id]);
+            $assignCategory->category_id = $productCategory->id;
+            $assignCategory->product_id = $product->id;
+            $assignCategory->active = 1;
+            $assignCategory->save();
+            
+        }
+        $message = "Product added successfully!";
+      
+        return $this->addProductPage($message );
+    }
 }

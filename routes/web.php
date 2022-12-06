@@ -17,4 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/products-by-category', [ProductController::class, 'productsByCategory']);
+Route::get('/add-product', [ProductController::class, 'addProductPage']);
 

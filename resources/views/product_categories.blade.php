@@ -11,6 +11,7 @@
         <div style="float:right;">
             <a href="/api/product-categories" style="padding-right:30px;"> Product Categories</a>  
             <a href="/products-by-category" style="padding-right:30px;"> Show Products By Categories</a> 
+            <a href="/add-product" style="padding-right:30px;"> Add Product</a>  
         </div>
         <div style="margin-top:100px;">
             <h2>Product Categories</h2>
